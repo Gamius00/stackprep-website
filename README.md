@@ -54,7 +54,7 @@ What the endpoint does:
 
 When you change the checkbox texts in `index.html`, bump `CONSENT_TEXT_VERSION` (waitlist) or `COMPANY_CONSENT_TEXT_VERSION` (company form) in `api/_lib/waitlist.mjs`.
 
-The waitlist form also sends the optional profession (`beruf`) and the attribution (`quelle`, `kampagne`).
+The waitlist form also sends the optional profession (`beruf`) and the attribution (`quelle`, `kampagne`). Selecting “Etwas anderes” reveals an optional text field (`berufAndere`, max. 120 characters), saved as `professionOther` in Convex. Without JavaScript the field remains visible; its value is only saved when `beruf` is `andere`.
 
 ## Company form
 

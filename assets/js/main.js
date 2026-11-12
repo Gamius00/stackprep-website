@@ -110,6 +110,17 @@
 
     const status = form.querySelector('[data-status]');
     const button = form.querySelector('button[type="submit"]');
+    const profession = form.querySelector('[name="beruf"]');
+    const otherProfession = form.querySelector('[data-other-profession]');
+    const syncOtherProfession = () => {
+      if (!profession || !otherProfession) return;
+      const selected = profession.value === 'andere';
+      otherProfession.hidden = !selected;
+      otherProfession.querySelector('input').disabled = !selected;
+    };
+    profession?.addEventListener('change', syncOtherProfession);
+    window.addEventListener('pageshow', syncOtherProfession);
+    syncOtherProfession();
 
     const setStatus = (state, message = messages[state]) => {
       status.textContent = message;
@@ -119,6 +130,7 @@
     // Reset keeps the attribution, which belongs to the visit, not to the entry.
     const resetForm = () => {
       form.reset();
+      syncOtherProfession();
       form.querySelectorAll('[data-attribution]').forEach((input) => {
         input.value = attribution[input.dataset.attribution] ?? '';
       });

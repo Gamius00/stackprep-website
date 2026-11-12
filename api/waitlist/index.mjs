@@ -60,11 +60,17 @@ export async function POST(request) {
   const email = normalizeEmail(form.get('email'));
   // The profession is optional; an empty choice means "not given".
   const profession = form.get('beruf') || undefined;
+  const otherValue = form.get('berufAndere');
+  const professionOther = profession === 'andere' && typeof otherValue === 'string'
+    ? otherValue.trim().replace(/\s+/g, ' ') || undefined
+    : undefined;
   if (
     !isValidEmail(email) ||
     form.get('alter') !== '16plus' ||
     form.get('einwilligung') !== 'ja' ||
-    (profession !== undefined && !PROFESSIONS.has(profession))
+    (profession !== undefined && !PROFESSIONS.has(profession)) ||
+    (profession === 'andere' && otherValue !== null &&
+      (typeof otherValue !== 'string' || otherValue.length > 120))
   ) {
     return respond('invalid');
   }
@@ -77,6 +83,7 @@ export async function POST(request) {
       rateLimitKey: rateLimitKey(request),
       confirmationTokenHash: hashToken(token),
       profession,
+      professionOther,
       ...readAttribution(form),
     });
 
