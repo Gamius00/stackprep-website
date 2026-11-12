@@ -724,6 +724,11 @@ a:hover {
   line-height: 1.55;
 }
 
+.stat__text strong {
+  color: #F4F5F9;
+  font-weight: 700;
+}
+
 .stat__source {
   margin-top: 0.875rem;
   color: #868CA6;
